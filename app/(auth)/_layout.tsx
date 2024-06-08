@@ -1,20 +1,20 @@
-import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import { useAuth } from "@clerk/clerk-expo";
 import React from "react";
 import Drawer from "expo-router/drawer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BlurView } from "expo-blur";
 
 export const LogoutButton = () => {
   const { signOut } = useAuth();
 
-  const doLogout = () => {
+  const logout = () => {
     signOut();
   };
 
   return (
-    <Pressable onPress={doLogout} style={{ marginRight: 10 }}>
+    <Pressable onPress={logout} style={{ marginRight: 10 }}>
       <Ionicons name="log-out-outline" size={24} color={"#fff"} />
     </Pressable>
   );
@@ -29,9 +29,21 @@ const TabsPage = () => {
         screenOptions={{
           drawerStyle: { backgroundColor: "#171717" },
           drawerType: "back",
-          headerStyle: {
-            backgroundColor: "#6c47ff",
-          },
+          // headerStyle: { backgroundColor: "rgb(23,23,23, 0.5)" },
+          headerTransparent: true,
+          headerBackground: () => (
+            <BlurView
+              tint="systemMaterialDark"
+              intensity={15}
+              experimentalBlurMethod="dimezisBlurView"
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                overflow: "hidden",
+                backgroundColor: "#171717",
+              }}
+            />
+          ),
           headerTintColor: "#fff",
         }}
       >

@@ -3,21 +3,20 @@ import { ThemeProvider } from "@react-navigation/native";
 import { DarkTheme } from "~/types";
 import { useFonts } from "expo-font";
 import { Slot, useRouter, useSegments } from "expo-router";
-import { Drawer } from "expo-router/drawer";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import * as SecureStore from "expo-secure-store";
-// import { EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY } from "~/env";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useColorScheme } from "~/hooks/useColorScheme";
+import { UserProvider } from "~/context/userContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const queryClient = new QueryClient();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -35,7 +34,11 @@ export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={"pk_test_c3RhYmxlLXdlZXZpbC03OS5jbGVyay5hY2NvdW50cy5kZXYk"} tokenCache={tokenCache}>
       <ThemeProvider value={DarkTheme}>
-        <InitialLayout />
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+            <InitialLayout />
+          </UserProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </ClerkProvider>
   );

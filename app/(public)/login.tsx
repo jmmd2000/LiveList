@@ -1,16 +1,15 @@
-import { useSignIn } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Button, Pressable, Text, Alert } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
+import { View, StyleSheet, Text } from "react-native";
 import SignInWithOAuth from "~/components/SignInWithOAuth";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Login = () => {
   return (
-    <View style={styles.container}>
-      {/* <Spinner visible={loading} /> */}
-      <SignInWithOAuth />
-    </View>
+    <LinearGradient colors={["#7c3aed", "#6d28d9", "#5b21b6"]} start={[1, 0]} end={[0, 1]} style={styles.linearGradient}>
+      <View style={styles.container}>
+        <Text style={{ fontSize: 32, fontWeight: "bold", marginBottom: 16, color: "#fff" }}>LiveList</Text>
+        <SignInWithOAuth />
+      </View>
+    </LinearGradient>
   );
 };
 
@@ -18,7 +17,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 20,
+    flexDirection: "column",
+    gap: 20,
   },
   inputField: {
     marginVertical: 4,
@@ -31,6 +33,11 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 8,
+    alignItems: "center",
+  },
+  linearGradient: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
   },
 });
